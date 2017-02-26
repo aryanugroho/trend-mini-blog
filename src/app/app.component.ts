@@ -14,7 +14,7 @@ import { AngularFire, AuthProviders, AuthMethods } from 'angularfire2';
           <md-icon class="rd-icon">add_alert</md-icon>
         </div>
         <button *ngIf="!isLogin" (click)="login()">Login</button>
-        <button *ngIf="isLogin" (click)="logoiut()">Logout</button>
+        <button *ngIf="isLogin" (click)="logout()">Logout</button>
     </md-toolbar>
 
     <router-outlet></router-outlet>
@@ -36,7 +36,7 @@ export class AppComponent implements OnInit {
     this.af.auth
       .login({
         provider: AuthProviders.Google,
-        method: AuthMethods.Popup,
+        method: AuthMethods.Redirect
       })
       .then((response) => {
         if (response.uid) {
@@ -47,8 +47,11 @@ export class AppComponent implements OnInit {
   }
 
   logout() {
-     this.isLogin = false;
-     localStorage.clear();
-     this.af.auth.logout();
+     this.af.auth
+      .logout()
+      .then(() => {
+        this.isLogin = false;
+        localStorage.removeItem('uid');
+      });
   }
 }
