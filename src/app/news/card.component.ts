@@ -5,7 +5,7 @@ import { AngularFire, FirebaseListObservable } from 'angularfire2';
 @Component({
     selector: 'card',
     template: ` 
-        <style>
+       <style>
         .rd-card {
           margin: 10px;
         }

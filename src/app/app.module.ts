@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { MaterialModule } from '@angular/material';
-import { AngularFireModule } from 'angularfire2';
+import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
 
 import { AppComponent } from './app.component';
 import { NewsComponent } from './news/news.component';
@@ -22,6 +22,11 @@ export const firebaseConfig = {
   messagingSenderId: "1079613611429"
 }
 
+const adminFirebaseAuthConfig = {
+  provider: AuthProviders.Google,
+  method: AuthMethods.Redirect
+};
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -29,7 +34,7 @@ export const firebaseConfig = {
     HttpModule,
     AppRoutingModule,
     MaterialModule.forRoot(),
-    AngularFireModule.initializeApp(firebaseConfig)
+    AngularFireModule.initializeApp(firebaseConfig, adminFirebaseAuthConfig)
   ],
   declarations: [
     AppComponent, NewsComponent, CardComponent, AddCardComponent
