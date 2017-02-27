@@ -10,7 +10,7 @@ import * as showdown  from 'showdown';
     template: ` 
        <style>
         .rd-card {
-          margin: 10px;
+          margin: 20px;
         }
         .rd-right {
           float: right;
@@ -76,12 +76,18 @@ export class CardComponent implements OnInit {
     }
 
     deleteNews() {
+        if (!this._isAuth()) { return; }
+
         this.cardModel
             .remove()
             .then(response => {
                 console.log('delete card', response);
                 this.router.navigate(['/news']);
             });
+    }
+
+    _isAuth() {
+        return localStorage.getItem('uid') === this.card.uid;
     }
 
     get cardModel() {

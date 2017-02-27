@@ -55,7 +55,8 @@ export class AddCardComponent implements OnInit {
             title: tv,
             content: cv,
             like: 0,
-            create: new Date().getTime()
+            create: new Date().getTime(),
+            uid: localStorage.getItem('uid')
         };
 
         const key = this._guid();

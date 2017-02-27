@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
 
-// import * as showdown from 'showdown';
+import * as _ from 'underscore';
 
 @Component({
     selector: 'news',
@@ -18,7 +18,7 @@ export class NewsComponent implements OnInit {
       this.af.database
         .list('/news')
         .subscribe((news) => {
-            this.cards = news;
+            this.cards = _.sortBy(news, o => o.create);
         });
     }
 }
