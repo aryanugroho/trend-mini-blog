@@ -4,8 +4,13 @@ import { AngularFire, AuthProviders, AuthMethods } from 'angularfire2';
 @Component({
   selector: 'app-root',
   template: `
+    <style>
+      .rd-title {
+        cursor: pointer;
+      }
+    </style>
     <md-toolbar color="primary">
-        <span>Mini Blog for Reactive Developer</span>
+        <span routerLink="/news" class="rd-title">Mini Blog for Reactive Developer</span>
         <span class="rd-spacer"></span>
         <div routerLink="/admin" routerLinkActive="active" class="rd-link">
           <md-icon class="rd-icon">description</md-icon>
