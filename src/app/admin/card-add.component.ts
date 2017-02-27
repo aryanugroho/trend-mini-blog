@@ -55,7 +55,7 @@ export class AddCardComponent implements OnInit {
             title: tv,
             content: cv,
             like: 0,
-            create: new Date().getMilliseconds()
+            create: new Date().getTime()
         };
 
         const key = this._guid();
