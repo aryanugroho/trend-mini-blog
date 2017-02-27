@@ -36,7 +36,7 @@ export class AppComponent implements OnInit {
     this.af.auth
       .login({
         provider: AuthProviders.Google,
-        method: AuthMethods.Redirect
+        method: AuthMethods.Popup
       })
       .then((response) => {
         if (response.uid) {

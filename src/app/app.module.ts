@@ -24,7 +24,7 @@ export const firebaseConfig = {
 
 const adminFirebaseAuthConfig = {
   provider: AuthProviders.Google,
-  method: AuthMethods.Redirect
+  method: AuthMethods.Popup
 };
 
 @NgModule({
