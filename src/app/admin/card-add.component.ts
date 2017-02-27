@@ -29,7 +29,7 @@ import { AngularFire } from 'angularfire2';
         </md-input-container>
         <p>
         <md-input-container class="full-width">
-            <textarea mdInput placeholder="Content" rows="10" #newsContent></textarea>
+            <textarea mdInput placeholder="Content" rows="20" #newsContent></textarea>
         </md-input-container>
     `
 })
