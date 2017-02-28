@@ -3,7 +3,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
 
-import * as showdown  from 'showdown';
+import * as showdown from 'showdown';
 
 @Component({
     selector: 'card',
@@ -59,7 +59,7 @@ export class CardComponent implements OnInit {
 
     ngOnInit() {
         this.route.params
-            .map((params: Params) => params['id'] )
+            .map((params: Params) => params['id'])
             .filter(id => id !== undefined)
             .subscribe(id => {
                 if (id) {
@@ -68,7 +68,7 @@ export class CardComponent implements OnInit {
                     this.cardObservable
                         .subscribe((card) => {
                             if (card) {
-                                this.card = card
+                                this.card = card;
                             }
                         });
                 }
@@ -76,8 +76,12 @@ export class CardComponent implements OnInit {
     }
 
     get sanitizedHtmlContent() {
-        const converter = new showdown.Converter()
-        return this.sanitizer.bypassSecurityTrustHtml(converter.makeHtml(this.card.content));
+        if (this.card) {
+            const converter = new showdown.Converter();
+            return this.sanitizer.bypassSecurityTrustHtml(converter.makeHtml(this.card.content));
+        } else {
+            return '';
+        }
     }
 
     editNews() {
@@ -98,7 +102,11 @@ export class CardComponent implements OnInit {
     }
 
     get isAuth() {
-        return localStorage.getItem('uid') === this.card.uid;
+        if (this.card) {
+            return localStorage.getItem('uid') === this.card.uid;
+        } else {
+            return false;
+        }
     }
 
     get cardModel() {

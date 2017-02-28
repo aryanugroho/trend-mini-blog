@@ -96,7 +96,7 @@ var AddCardComponent = (function () {
     return AddCardComponent;
     var _a, _b, _c;
 }());
-//# sourceMappingURL=/Users/dowon2yun/prototyping/firebase/trend-mini-blog/src/card-add.component.js.map
+//# sourceMappingURL=/Users/dowonyun/opensource/ysyun/trend-mini-blog/src/card-add.component.js.map
 
 /***/ }),
 
@@ -152,8 +152,13 @@ var CardComponent = (function () {
     };
     Object.defineProperty(CardComponent.prototype, "sanitizedHtmlContent", {
         get: function () {
-            var converter = new __WEBPACK_IMPORTED_MODULE_4_showdown__["Converter"]();
-            return this.sanitizer.bypassSecurityTrustHtml(converter.makeHtml(this.card.content));
+            if (this.card) {
+                var converter = new __WEBPACK_IMPORTED_MODULE_4_showdown__["Converter"]();
+                return this.sanitizer.bypassSecurityTrustHtml(converter.makeHtml(this.card.content));
+            }
+            else {
+                return '';
+            }
         },
         enumerable: true,
         configurable: true
@@ -178,7 +183,12 @@ var CardComponent = (function () {
     };
     Object.defineProperty(CardComponent.prototype, "isAuth", {
         get: function () {
-            return localStorage.getItem('uid') === this.card.uid;
+            if (this.card) {
+                return localStorage.getItem('uid') === this.card.uid;
+            }
+            else {
+                return false;
+            }
         },
         enumerable: true,
         configurable: true
@@ -211,7 +221,7 @@ var CardComponent = (function () {
     return CardComponent;
     var _a, _b, _c, _d;
 }());
-//# sourceMappingURL=/Users/dowon2yun/prototyping/firebase/trend-mini-blog/src/card.component.js.map
+//# sourceMappingURL=/Users/dowonyun/opensource/ysyun/trend-mini-blog/src/card.component.js.map
 
 /***/ }),
 
@@ -221,8 +231,6 @@ var CardComponent = (function () {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_angularfire2__ = __webpack_require__(123);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_underscore__ = __webpack_require__(878);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_underscore___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_underscore__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return NewsComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -235,7 +243,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
-
 var NewsComponent = (function () {
     function NewsComponent(af) {
         this.af = af;
@@ -245,7 +252,7 @@ var NewsComponent = (function () {
         this.af.database
             .list('/news')
             .subscribe(function (news) {
-            _this.cards = __WEBPACK_IMPORTED_MODULE_2_underscore__["sortBy"](news, function (o) { return o.create; });
+            _this.cards = news; //_.sortBy(news, o => o.create);
         });
     };
     NewsComponent = __decorate([
@@ -258,7 +265,7 @@ var NewsComponent = (function () {
     return NewsComponent;
     var _a;
 }());
-//# sourceMappingURL=/Users/dowon2yun/prototyping/firebase/trend-mini-blog/src/news.component.js.map
+//# sourceMappingURL=/Users/dowonyun/opensource/ysyun/trend-mini-blog/src/news.component.js.map
 
 /***/ }),
 
@@ -293,7 +300,7 @@ if (__WEBPACK_IMPORTED_MODULE_2__environments_environment__["a" /* environment *
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["a" /* enableProdMode */])();
 }
 __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_3__app_app_module__["a" /* AppModule */]);
-//# sourceMappingURL=/Users/dowon2yun/prototyping/firebase/trend-mini-blog/src/main.js.map
+//# sourceMappingURL=/Users/dowonyun/opensource/ysyun/trend-mini-blog/src/main.js.map
 
 /***/ }),
 
@@ -345,7 +352,7 @@ Copyright 2017 Google Inc. All Rights Reserved.
 Use of this source code is governed by an MIT-style license that
 can be found in the LICENSE file at http://angular.io/license
 */ 
-//# sourceMappingURL=/Users/dowon2yun/prototyping/firebase/trend-mini-blog/src/app-route.module.js.map
+//# sourceMappingURL=/Users/dowonyun/opensource/ysyun/trend-mini-blog/src/app-route.module.js.map
 
 /***/ }),
 
@@ -410,7 +417,7 @@ var AppComponent = (function () {
     return AppComponent;
     var _a;
 }());
-//# sourceMappingURL=/Users/dowon2yun/prototyping/firebase/trend-mini-blog/src/app.component.js.map
+//# sourceMappingURL=/Users/dowonyun/opensource/ysyun/trend-mini-blog/src/app.component.js.map
 
 /***/ }),
 
@@ -485,7 +492,7 @@ var AppModule = (function () {
     ], AppModule);
     return AppModule;
 }());
-//# sourceMappingURL=/Users/dowon2yun/prototyping/firebase/trend-mini-blog/src/app.module.js.map
+//# sourceMappingURL=/Users/dowonyun/opensource/ysyun/trend-mini-blog/src/app.module.js.map
 
 /***/ }),
 
@@ -501,11 +508,11 @@ var AppModule = (function () {
 var environment = {
     production: false
 };
-//# sourceMappingURL=/Users/dowon2yun/prototyping/firebase/trend-mini-blog/src/environment.js.map
+//# sourceMappingURL=/Users/dowonyun/opensource/ysyun/trend-mini-blog/src/environment.js.map
 
 /***/ }),
 
-/***/ 880:
+/***/ 879:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(510);
@@ -513,5 +520,5 @@ module.exports = __webpack_require__(510);
 
 /***/ })
 
-},[880]);
+},[879]);
 //# sourceMappingURL=main.bundle.map

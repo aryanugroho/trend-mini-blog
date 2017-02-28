@@ -12,13 +12,13 @@ import * as _ from 'underscore';
 export class NewsComponent implements OnInit {
     cards: any[];
 
-    constructor(private af: AngularFire) {}
+    constructor(private af: AngularFire) { }
 
-    ngOnInit() { 
-      this.af.database
-        .list('/news')
-        .subscribe((news) => {
-            this.cards = _.sortBy(news, o => o.create);
-        });
+    ngOnInit() {
+        this.af.database
+            .list('/news')
+            .subscribe((news) => {
+                this.cards = news; //_.sortBy(news, o => o.create);
+            });
     }
 }
