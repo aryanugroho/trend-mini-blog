@@ -12,8 +12,8 @@ import { AngularFire, AuthProviders, AuthMethods } from 'angularfire2';
     <md-toolbar color="primary">
         <span routerLink="/news" class="rd-title">Mini Blog for Reactive Developer</span>
         <span class="rd-spacer"></span>
-        <div routerLink="/admin" routerLinkActive="active" class="rd-link">
-          <md-icon class="rd-icon">description</md-icon>
+        <div *ngIf="isLogin" routerLink="/admin" routerLinkActive="active" class="rd-link">
+          <md-icon class="rd-icon">create</md-icon>
         </div>
         <div routerLink="/news" routerLinkActive="active" class="rd-link">
           <md-icon class="rd-icon">add_alert</md-icon>

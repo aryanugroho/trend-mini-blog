@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { AngularFire } from 'angularfire2';
 
@@ -26,22 +26,44 @@ import { AngularFire } from 'angularfire2';
               <a md-raised-button routerLink="/news" class="button-space">취소</a>
         </div>
         <md-input-container class="full-width">
-            <input mdInput placeholder="Title" value="" #newsTitle>
+            <input mdInput placeholder="Title" [value]="card?.title" #newsTitle>
         </md-input-container>
         <p>
         <md-input-container class="full-width">
-            <textarea mdInput placeholder="You can write content based on Markdown (http://showdownjs.github.io/demo/)" rows="30" #newsContent></textarea>
+            <textarea mdInput placeholder="You can write content based on Markdown (http://showdownjs.github.io/demo/)" rows="30" #newsContent>{{ card?.content }}</textarea>
         </md-input-container>
     `
 })
 export class AddCardComponent implements OnInit {
 
+    card: any;
+    isUpdate: boolean;
+
     constructor(
         private af: AngularFire,
+        private route: ActivatedRoute,
         private router: Router
     ) { }
 
-    ngOnInit() { }
+    ngOnInit() {
+        this.isUpdate = false;
+        this.route.params
+            .map((params: Params) => params['id'])
+            .filter(id => id !== undefined)
+            .subscribe(id => {
+                if (id) {
+                    const cardObservable = this.af.database
+                        .object(`/news/${id}`);
+                    cardObservable
+                        .subscribe((card) => {
+                            if (card) {
+                                this.card = card
+                                this.isUpdate = true;
+                            }
+                        });
+                }
+            });
+    }
 
     addNews(title, content) {
         const tv = title.value;
@@ -60,13 +82,20 @@ export class AddCardComponent implements OnInit {
             uid: localStorage.getItem('uid')
         };
 
-        const key = this._guid();
-            this.af.database
-                .object(`/news/${key}`)
+        if (this.isUpdate) {
+            this.af.database.object(`/news/${this.card.$key}`)
+                .update(news)
+                .then((response) => {
+                    this.router.navigate(['/news']);
+                });
+        } else {
+            const key = this._guid();
+            this.af.database.object(`/news/${key}`)
                 .set(news)
                 .then((response) => {
                     this.router.navigate(['/news']);
                 });
+        }
     }
 
     _guid() {

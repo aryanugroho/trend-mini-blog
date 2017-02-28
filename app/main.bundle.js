@@ -21,11 +21,31 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var AddCardComponent = (function () {
-    function AddCardComponent(af, router) {
+    function AddCardComponent(af, route, router) {
         this.af = af;
+        this.route = route;
         this.router = router;
     }
-    AddCardComponent.prototype.ngOnInit = function () { };
+    AddCardComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.isUpdate = false;
+        this.route.params
+            .map(function (params) { return params['id']; })
+            .filter(function (id) { return id !== undefined; })
+            .subscribe(function (id) {
+            if (id) {
+                var cardObservable = _this.af.database
+                    .object("/news/" + id);
+                cardObservable
+                    .subscribe(function (card) {
+                    if (card) {
+                        _this.card = card;
+                        _this.isUpdate = true;
+                    }
+                });
+            }
+        });
+    };
     AddCardComponent.prototype.addNews = function (title, content) {
         var _this = this;
         var tv = title.value;
@@ -41,13 +61,21 @@ var AddCardComponent = (function () {
             create: new Date().getTime(),
             uid: localStorage.getItem('uid')
         };
-        var key = this._guid();
-        this.af.database
-            .object("/news/" + key)
-            .set(news)
-            .then(function (response) {
-            _this.router.navigate(['/news']);
-        });
+        if (this.isUpdate) {
+            this.af.database.object("/news/" + this.card.$key)
+                .update(news)
+                .then(function (response) {
+                _this.router.navigate(['/news']);
+            });
+        }
+        else {
+            var key = this._guid();
+            this.af.database.object("/news/" + key)
+                .set(news)
+                .then(function (response) {
+                _this.router.navigate(['/news']);
+            });
+        }
     };
     AddCardComponent.prototype._guid = function () {
         function s4() {
@@ -61,12 +89,12 @@ var AddCardComponent = (function () {
     AddCardComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["c" /* Component */])({
             selector: 'card-add',
-            template: " \n        <style>\n            .full-width {\n                width: 100%;\n            }\n            .button-row {\n                float: right;\n                justify-content: space-around;\n            }\n            .button-space {\n                margin-right: 10px;\n            }\n        </style>\n        <p>\n        <div class=\"button-row\">\n              <a href=\"http://showdownjs.github.io/demo/\" target=\"_new\" class=\"button-space\">\uB9C8\uD06C\uB2E4\uC6B4 \uBC30\uC6B0\uAE30</a>\n              <button md-raised-button class=\"button-space\" (click)=\"addNews(newsTitle, newsContent)\">\uCD9C\uD310</button>\n              <a md-raised-button routerLink=\"/news\" class=\"button-space\">\uCDE8\uC18C</a>\n        </div>\n        <md-input-container class=\"full-width\">\n            <input mdInput placeholder=\"Title\" value=\"\" #newsTitle>\n        </md-input-container>\n        <p>\n        <md-input-container class=\"full-width\">\n            <textarea mdInput placeholder=\"You can write content based on Markdown (http://showdownjs.github.io/demo/)\" rows=\"30\" #newsContent></textarea>\n        </md-input-container>\n    "
+            template: " \n        <style>\n            .full-width {\n                width: 100%;\n            }\n            .button-row {\n                float: right;\n                justify-content: space-around;\n            }\n            .button-space {\n                margin-right: 10px;\n            }\n        </style>\n        <p>\n        <div class=\"button-row\">\n              <a href=\"http://showdownjs.github.io/demo/\" target=\"_new\" class=\"button-space\">\uB9C8\uD06C\uB2E4\uC6B4 \uBC30\uC6B0\uAE30</a>\n              <button md-raised-button class=\"button-space\" (click)=\"addNews(newsTitle, newsContent)\">\uCD9C\uD310</button>\n              <a md-raised-button routerLink=\"/news\" class=\"button-space\">\uCDE8\uC18C</a>\n        </div>\n        <md-input-container class=\"full-width\">\n            <input mdInput placeholder=\"Title\" [value]=\"card?.title\" #newsTitle>\n        </md-input-container>\n        <p>\n        <md-input-container class=\"full-width\">\n            <textarea mdInput placeholder=\"You can write content based on Markdown (http://showdownjs.github.io/demo/)\" rows=\"30\" #newsContent>{{ card?.content }}</textarea>\n        </md-input-container>\n    "
         }), 
-        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2_angularfire2__["d" /* AngularFire */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2_angularfire2__["d" /* AngularFire */]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* Router */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* Router */]) === 'function' && _b) || Object])
+        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2_angularfire2__["d" /* AngularFire */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2_angularfire2__["d" /* AngularFire */]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */]) === 'function' && _c) || Object])
     ], AddCardComponent);
     return AddCardComponent;
-    var _a, _b;
+    var _a, _b, _c;
 }());
 //# sourceMappingURL=/Users/dowon2yun/prototyping/firebase/trend-mini-blog/src/card-add.component.js.map
 
@@ -130,6 +158,12 @@ var CardComponent = (function () {
         enumerable: true,
         configurable: true
     });
+    CardComponent.prototype.editNews = function () {
+        if (!this.isAuth) {
+            return;
+        }
+        this.router.navigate(['/admin', this.card.$key]);
+    };
     CardComponent.prototype.deleteNews = function () {
         var _this = this;
         if (!this.isAuth) {
@@ -170,9 +204,9 @@ var CardComponent = (function () {
     CardComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["c" /* Component */])({
             selector: 'card',
-            template: " \n       <style>\n        .rd-card {\n          margin: 20px;\n        }\n        .rd-right {\n          float: right;\n          margin-left:auto; \n          margin-right:0;\n          cursor: pointer;\n        }\n        .rd-title {\n            font-size: 20px;\n            text-decoration: none;\n            font-color: blue;\n        }\n       </style>\n       <md-card class=\"rd-card\">\n          <md-card-header>\n            <md-card-title> \n              <a routerLink=\"/news/{{ card?.$key }}\" routerLinkActive=\"active\" class=\"rd-title\">{{ card?.title }}</a>\n            </md-card-title>\n            <md-icon *ngIf=\"isAuth\" class=\"rd-right\" (click)=\"deleteNews()\">delete</md-icon>\n          </md-card-header>\n          <md-card-content>\n            <div [innerHTML]=\"sanitizedHtmlContent\"></div>\n          </md-card-content>\n          <md-card-actions>\n            <button md-button (click)=\"addLike()\"><md-icon class=\"rd-icon\">thumb_up</md-icon><span> {{ card?.like }} </span></button>\n          </md-card-actions>\n        </md-card>  \n    "
+            template: " \n       <style>\n        .rd-card {\n          margin: 20px;\n        }\n        .rd-right {\n          margin-left:auto; \n          margin-right:0;\n          cursor: pointer;\n        }\n        .rd-title {\n            font-size: 20px;\n            text-decoration: none;\n            font-color: blue;\n        }\n        .rd-margin {\n            margin-right: 5px;\n        }\n       </style>\n       <md-card class=\"rd-card\">\n          <md-card-header>\n            <md-card-title> \n              <a routerLink=\"/news/{{ card?.$key }}\" routerLinkActive=\"active\" class=\"rd-title\">{{ card?.title }}</a>\n            </md-card-title>\n            <div class=\"rd-right\">\n                <md-icon *ngIf=\"isAuth\" (click)=\"editNews()\" class=\"rd-margin\">edit</md-icon>\n                <md-icon *ngIf=\"isAuth\" (click)=\"deleteNews()\">delete</md-icon>\n            </div>\n          </md-card-header>\n          <md-card-content>\n            <div [innerHTML]=\"sanitizedHtmlContent\"></div>\n          </md-card-content>\n          <md-card-actions>\n            <button md-button (click)=\"addLike()\"><md-icon class=\"rd-icon\">thumb_up</md-icon><span> {{ card?.like }} </span></button>\n          </md-card-actions>\n        </md-card>  \n    "
         }), 
-        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3_angularfire2__["d" /* AngularFire */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_3_angularfire2__["d" /* AngularFire */]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* ActivatedRoute */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* ActivatedRoute */]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* Router */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* Router */]) === 'function' && _c) || Object, (typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__["c" /* DomSanitizer */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__["c" /* DomSanitizer */]) === 'function' && _d) || Object])
+        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3_angularfire2__["d" /* AngularFire */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_3_angularfire2__["d" /* AngularFire */]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */]) === 'function' && _c) || Object, (typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__["c" /* DomSanitizer */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__["c" /* DomSanitizer */]) === 'function' && _d) || Object])
     ], CardComponent);
     return CardComponent;
     var _a, _b, _c, _d;
@@ -291,7 +325,8 @@ var routes = [
     { path: '', redirectTo: '/news', pathMatch: 'full' },
     { path: 'news', component: __WEBPACK_IMPORTED_MODULE_3__news_news_component__["a" /* NewsComponent */] },
     { path: 'news/:id', component: __WEBPACK_IMPORTED_MODULE_2__news_card_component__["a" /* CardComponent */] },
-    { path: 'admin', component: __WEBPACK_IMPORTED_MODULE_4__admin_card_add_component__["a" /* AddCardComponent */] }
+    { path: 'admin', component: __WEBPACK_IMPORTED_MODULE_4__admin_card_add_component__["a" /* AddCardComponent */] },
+    { path: 'admin/:id', component: __WEBPACK_IMPORTED_MODULE_4__admin_card_add_component__["a" /* AddCardComponent */] }
 ];
 var AppRoutingModule = (function () {
     function AppRoutingModule() {
@@ -368,7 +403,7 @@ var AppComponent = (function () {
     AppComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["c" /* Component */])({
             selector: 'app-root',
-            template: "\n    <style>\n      .rd-title {\n        cursor: pointer;\n      }\n    </style>\n    <md-toolbar color=\"primary\">\n        <span routerLink=\"/news\" class=\"rd-title\">Mini Blog for Reactive Developer</span>\n        <span class=\"rd-spacer\"></span>\n        <div routerLink=\"/admin\" routerLinkActive=\"active\" class=\"rd-link\">\n          <md-icon class=\"rd-icon\">description</md-icon>\n        </div>\n        <div routerLink=\"/news\" routerLinkActive=\"active\" class=\"rd-link\">\n          <md-icon class=\"rd-icon\">add_alert</md-icon>\n        </div>\n        <button *ngIf=\"!isLogin\" (click)=\"login()\">Login</button>\n        <button *ngIf=\"isLogin\" (click)=\"logout()\">Logout</button>\n    </md-toolbar>\n\n    <router-outlet></router-outlet>\n  ",
+            template: "\n    <style>\n      .rd-title {\n        cursor: pointer;\n      }\n    </style>\n    <md-toolbar color=\"primary\">\n        <span routerLink=\"/news\" class=\"rd-title\">Mini Blog for Reactive Developer</span>\n        <span class=\"rd-spacer\"></span>\n        <div *ngIf=\"isLogin\" routerLink=\"/admin\" routerLinkActive=\"active\" class=\"rd-link\">\n          <md-icon class=\"rd-icon\">create</md-icon>\n        </div>\n        <div routerLink=\"/news\" routerLinkActive=\"active\" class=\"rd-link\">\n          <md-icon class=\"rd-icon\">add_alert</md-icon>\n        </div>\n        <button *ngIf=\"!isLogin\" (click)=\"login()\">Login</button>\n        <button *ngIf=\"isLogin\" (click)=\"logout()\">Logout</button>\n    </md-toolbar>\n\n    <router-outlet></router-outlet>\n  ",
             styles: [__webpack_require__(836)]
         }), 
         __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_angularfire2__["d" /* AngularFire */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1_angularfire2__["d" /* AngularFire */]) === 'function' && _a) || Object])

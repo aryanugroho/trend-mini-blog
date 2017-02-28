@@ -13,7 +13,6 @@ import * as showdown  from 'showdown';
           margin: 20px;
         }
         .rd-right {
-          float: right;
           margin-left:auto; 
           margin-right:0;
           cursor: pointer;
@@ -23,13 +22,19 @@ import * as showdown  from 'showdown';
             text-decoration: none;
             font-color: blue;
         }
+        .rd-margin {
+            margin-right: 5px;
+        }
        </style>
        <md-card class="rd-card">
           <md-card-header>
             <md-card-title> 
               <a routerLink="/news/{{ card?.$key }}" routerLinkActive="active" class="rd-title">{{ card?.title }}</a>
             </md-card-title>
-            <md-icon *ngIf="isAuth" class="rd-right" (click)="deleteNews()">delete</md-icon>
+            <div class="rd-right">
+                <md-icon *ngIf="isAuth" (click)="editNews()" class="rd-margin">edit</md-icon>
+                <md-icon *ngIf="isAuth" (click)="deleteNews()">delete</md-icon>
+            </div>
           </md-card-header>
           <md-card-content>
             <div [innerHTML]="sanitizedHtmlContent"></div>
@@ -73,6 +78,12 @@ export class CardComponent implements OnInit {
     get sanitizedHtmlContent() {
         const converter = new showdown.Converter()
         return this.sanitizer.bypassSecurityTrustHtml(converter.makeHtml(this.card.content));
+    }
+
+    editNews() {
+        if (!this.isAuth) { return; }
+
+        this.router.navigate(['/admin', this.card.$key]);
     }
 
     deleteNews() {
