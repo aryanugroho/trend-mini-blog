@@ -21,6 +21,7 @@ import { AngularFire } from 'angularfire2';
         </style>
         <p>
         <div class="button-row">
+              <a href="http://showdownjs.github.io/demo/" target="_new" class="button-space">마크다운 배우기</a>
               <button md-raised-button class="button-space" (click)="addNews(newsTitle, newsContent)">출판</button>
               <a md-raised-button routerLink="/news" class="button-space">취소</a>
         </div>
@@ -29,7 +30,7 @@ import { AngularFire } from 'angularfire2';
         </md-input-container>
         <p>
         <md-input-container class="full-width">
-            <textarea mdInput placeholder="Content" rows="20" #newsContent></textarea>
+            <textarea mdInput placeholder="You can write content based on Markdown (http://showdownjs.github.io/demo/)" rows="30" #newsContent></textarea>
         </md-input-container>
     `
 })
