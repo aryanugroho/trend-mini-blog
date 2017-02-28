@@ -77,7 +77,7 @@ export class AddCardComponent implements OnInit {
         const news = {
             title: tv,
             content: cv,
-            like: 0,
+            like: this.card ? this.card.like : 0,
             create: new Date().getTime(),
             uid: localStorage.getItem('uid')
         };
