@@ -132,7 +132,7 @@ var CardComponent = (function () {
     });
     CardComponent.prototype.deleteNews = function () {
         var _this = this;
-        if (!this._isAuth()) {
+        if (!this.isAuth) {
             return;
         }
         this.cardModel
@@ -142,9 +142,13 @@ var CardComponent = (function () {
             _this.router.navigate(['/news']);
         });
     };
-    CardComponent.prototype._isAuth = function () {
-        return localStorage.getItem('uid') === this.card.uid;
-    };
+    Object.defineProperty(CardComponent.prototype, "isAuth", {
+        get: function () {
+            return localStorage.getItem('uid') === this.card.uid;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(CardComponent.prototype, "cardModel", {
         get: function () {
             if (!this.cardObservable) {
@@ -166,7 +170,7 @@ var CardComponent = (function () {
     CardComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["c" /* Component */])({
             selector: 'card',
-            template: " \n       <style>\n        .rd-card {\n          margin: 20px;\n        }\n        .rd-right {\n          float: right;\n          margin-left:auto; \n          margin-right:0;\n          cursor: pointer;\n        }\n        .rd-title {\n            font-size: 20px;\n            text-decoration: none;\n            font-color: blue;\n        }\n       </style>\n       <md-card class=\"rd-card\">\n          <md-card-header>\n            <md-card-title> \n              <a routerLink=\"/news/{{ card?.$key }}\" routerLinkActive=\"active\" class=\"rd-title\">{{ card?.title }}</a>\n            </md-card-title>\n            <md-icon class=\"rd-right\" (click)=\"deleteNews()\">delete</md-icon>\n          </md-card-header>\n          <md-card-content>\n            <div [innerHTML]=\"sanitizedHtmlContent\"></div>\n          </md-card-content>\n          <md-card-actions>\n            <button md-button (click)=\"addLike()\"><md-icon class=\"rd-icon\">thumb_up</md-icon><span> {{ card?.like }} </span></button>\n          </md-card-actions>\n        </md-card>  \n    "
+            template: " \n       <style>\n        .rd-card {\n          margin: 20px;\n        }\n        .rd-right {\n          float: right;\n          margin-left:auto; \n          margin-right:0;\n          cursor: pointer;\n        }\n        .rd-title {\n            font-size: 20px;\n            text-decoration: none;\n            font-color: blue;\n        }\n       </style>\n       <md-card class=\"rd-card\">\n          <md-card-header>\n            <md-card-title> \n              <a routerLink=\"/news/{{ card?.$key }}\" routerLinkActive=\"active\" class=\"rd-title\">{{ card?.title }}</a>\n            </md-card-title>\n            <md-icon *ngIf=\"isAuth\" class=\"rd-right\" (click)=\"deleteNews()\">delete</md-icon>\n          </md-card-header>\n          <md-card-content>\n            <div [innerHTML]=\"sanitizedHtmlContent\"></div>\n          </md-card-content>\n          <md-card-actions>\n            <button md-button (click)=\"addLike()\"><md-icon class=\"rd-icon\">thumb_up</md-icon><span> {{ card?.like }} </span></button>\n          </md-card-actions>\n        </md-card>  \n    "
         }), 
         __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3_angularfire2__["d" /* AngularFire */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_3_angularfire2__["d" /* AngularFire */]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* ActivatedRoute */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* ActivatedRoute */]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* Router */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* Router */]) === 'function' && _c) || Object, (typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__["c" /* DomSanitizer */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__["c" /* DomSanitizer */]) === 'function' && _d) || Object])
     ], CardComponent);
