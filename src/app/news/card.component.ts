@@ -29,7 +29,7 @@ import * as showdown  from 'showdown';
             <md-card-title> 
               <a routerLink="/news/{{ card?.$key }}" routerLinkActive="active" class="rd-title">{{ card?.title }}</a>
             </md-card-title>
-            <md-icon class="rd-right" (click)="deleteNews()">delete</md-icon>
+            <md-icon *ngIf="isAuth" class="rd-right" (click)="deleteNews()">delete</md-icon>
           </md-card-header>
           <md-card-content>
             <div [innerHTML]="sanitizedHtmlContent"></div>
@@ -76,7 +76,7 @@ export class CardComponent implements OnInit {
     }
 
     deleteNews() {
-        if (!this._isAuth()) { return; }
+        if (!this.isAuth) { return; }
 
         this.cardModel
             .remove()
@@ -86,7 +86,7 @@ export class CardComponent implements OnInit {
             });
     }
 
-    _isAuth() {
+    get isAuth() {
         return localStorage.getItem('uid') === this.card.uid;
     }
 
