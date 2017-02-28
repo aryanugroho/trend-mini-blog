@@ -108,7 +108,7 @@ var AddCardComponent = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__ = __webpack_require__(42);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__(269);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2__ = __webpack_require__(123);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_showdown__ = __webpack_require__(877);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_showdown__ = __webpack_require__(876);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_showdown___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_showdown__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CardComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -221,7 +221,7 @@ var CardComponent = (function () {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_angularfire2__ = __webpack_require__(123);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_underscore__ = __webpack_require__(879);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_underscore__ = __webpack_require__(878);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_underscore___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_underscore__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return NewsComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -403,8 +403,7 @@ var AppComponent = (function () {
     AppComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["c" /* Component */])({
             selector: 'app-root',
-            template: "\n    <style>\n      .rd-title {\n        cursor: pointer;\n      }\n    </style>\n    <md-toolbar color=\"primary\">\n        <span routerLink=\"/news\" class=\"rd-title\">Mini Blog for Reactive Developer</span>\n        <span class=\"rd-spacer\"></span>\n        <div *ngIf=\"isLogin\" routerLink=\"/admin\" routerLinkActive=\"active\" class=\"rd-link\">\n          <md-icon class=\"rd-icon\">create</md-icon>\n        </div>\n        <div routerLink=\"/news\" routerLinkActive=\"active\" class=\"rd-link\">\n          <md-icon class=\"rd-icon\">notifications</md-icon>\n        </div>\n        <button *ngIf=\"!isLogin\" (click)=\"login()\">Login</button>\n        <button *ngIf=\"isLogin\" (click)=\"logout()\">Logout</button>\n    </md-toolbar>\n\n    <router-outlet></router-outlet>\n  ",
-            styles: [__webpack_require__(836)]
+            template: "\n    <style>\n      .rd-icon {\n        padding: 0 15px;\n      }\n      .margin-right {\n        margin-right: 15px;\n      }\n      .rd-spacer {\n        flex: 1 1 auto;\n      }\n      .rd-link {\n          cursor: pointer;\n      }\n      a {\n          text-decoration: none;\n          color: white;\n      }\n       a:link{\n           color: white;\n       }\n       a:hover{\n           color: white;\n       }\n       a:active{\n           color: white;\n       }\n    </style>\n    <md-toolbar color=\"primary\">\n        <span routerLink=\"/news\" class=\"rd-link\">Mini Blog for Reactive Developer</span>\n        <span class=\"rd-spacer\"></span>\n        <div *ngIf=\"isLogin\" routerLink=\"/admin\" routerLinkActive=\"active\" class=\"rd-link\">\n          <md-icon class=\"rd-icon\">create</md-icon>\n        </div>\n        <!--div routerLink=\"/news\" routerLinkActive=\"active\" class=\"rd-link\">\n          <md-icon class=\"rd-icon\">notifications</md-icon>\n        </div-->\n        <a href=\"https://github.com/ysyun/trend-mini-blog\" target=\"_new\">\n          <span class=\"icon margin-right\">\n            <i class=\"fa fa-github\"></i>\n          </span>\n        </a>\n        <button *ngIf=\"!isLogin\" (click)=\"login()\">Login</button>\n        <button *ngIf=\"isLogin\" (click)=\"logout()\">Logout</button>\n    </md-toolbar>\n\n    <router-outlet></router-outlet>\n  "
         }), 
         __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_angularfire2__["d" /* AngularFire */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1_angularfire2__["d" /* AngularFire */]) === 'function' && _a) || Object])
     ], AppComponent);
@@ -506,14 +505,7 @@ var environment = {
 
 /***/ }),
 
-/***/ 836:
-/***/ (function(module, exports) {
-
-module.exports = "\n.rd-icon {\n  padding: 0 5px;\n}\n\n.rd-spacer {\n  -webkit-box-flex: 1;\n      -ms-flex: 1 1 auto;\n          flex: 1 1 auto;\n}\n\n.rd-link {\n    cursor: pointer;\n}"
-
-/***/ }),
-
-/***/ 881:
+/***/ 880:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(510);
@@ -521,5 +513,5 @@ module.exports = __webpack_require__(510);
 
 /***/ })
 
-},[881]);
+},[880]);
 //# sourceMappingURL=main.bundle.map
