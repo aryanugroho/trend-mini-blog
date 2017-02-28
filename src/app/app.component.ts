@@ -16,7 +16,7 @@ import { AngularFire, AuthProviders, AuthMethods } from 'angularfire2';
           <md-icon class="rd-icon">create</md-icon>
         </div>
         <div routerLink="/news" routerLinkActive="active" class="rd-link">
-          <md-icon class="rd-icon">add_alert</md-icon>
+          <md-icon class="rd-icon">notifications</md-icon>
         </div>
         <button *ngIf="!isLogin" (click)="login()">Login</button>
         <button *ngIf="isLogin" (click)="logout()">Logout</button>
