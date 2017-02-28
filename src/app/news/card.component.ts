@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, SecurityContext } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, Title } from '@angular/platform-browser';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
 
@@ -25,11 +25,30 @@ import * as showdown from 'showdown';
         .rd-margin {
             margin-right: 5px;
         }
+        .rd-content {
+            color: #636262;
+        }
+        a {
+          text-decoration: none;
+          color: #6565e2;
+        }
+        a:link{
+           color: #6565e2;
+        }
+        a:hover{
+           color: #6565e2;
+        }
+        a:active{
+           color: #6565e2;
+        }
        </style>
        <md-card class="rd-card">
           <md-card-header>
             <md-card-title> 
-              <a routerLink="/news/{{ card?.$key }}" routerLinkActive="active" class="rd-title">{{ card?.title }}</a>
+              <a routerLink="/news/{{ card?.$key }}" routerLinkActive="active" class="rd-title">
+                  <i class="fa fa-slack" aria-hidden="true"></i>
+                  {{ card?.title }}
+              </a>
             </md-card-title>
             <div class="rd-right">
                 <md-icon *ngIf="isAuth" (click)="editNews()" class="rd-margin">edit</md-icon>
@@ -37,7 +56,7 @@ import * as showdown from 'showdown';
             </div>
           </md-card-header>
           <md-card-content>
-            <div [innerHTML]="sanitizedHtmlContent"></div>
+            <div [innerHTML]="sanitizedHtmlContent" class="rd-content"></div>
           </md-card-content>
           <md-card-actions>
             <button md-button (click)="addLike()"><md-icon class="rd-icon">thumb_up</md-icon><span> {{ card?.like }} </span></button>
@@ -54,7 +73,8 @@ export class CardComponent implements OnInit {
         private af: AngularFire,
         private route: ActivatedRoute,
         private router: Router,
-        private sanitizer: DomSanitizer
+        private sanitizer: DomSanitizer,
+        private title: Title
     ) { }
 
     ngOnInit() {
@@ -69,6 +89,7 @@ export class CardComponent implements OnInit {
                         .subscribe((card) => {
                             if (card) {
                                 this.card = card;
+                                this.title.setTitle(this.card.title);
                             }
                         });
                 }

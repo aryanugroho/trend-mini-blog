@@ -105,7 +105,7 @@ var AddCardComponent = (function () {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__ = __webpack_require__(33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__(269);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2__ = __webpack_require__(123);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_showdown__ = __webpack_require__(876);
@@ -126,11 +126,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var CardComponent = (function () {
-    function CardComponent(af, route, router, sanitizer) {
+    function CardComponent(af, route, router, sanitizer, title) {
         this.af = af;
         this.route = route;
         this.router = router;
         this.sanitizer = sanitizer;
+        this.title = title;
     }
     CardComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -145,6 +146,7 @@ var CardComponent = (function () {
                     .subscribe(function (card) {
                     if (card) {
                         _this.card = card;
+                        _this.title.setTitle(_this.card.title);
                     }
                 });
             }
@@ -214,12 +216,12 @@ var CardComponent = (function () {
     CardComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["c" /* Component */])({
             selector: 'card',
-            template: " \n       <style>\n        .rd-card {\n          margin: 20px;\n        }\n        .rd-right {\n          margin-left:auto; \n          margin-right:0;\n          cursor: pointer;\n        }\n        .rd-title {\n            font-size: 20px;\n            text-decoration: none;\n            font-color: blue;\n        }\n        .rd-margin {\n            margin-right: 5px;\n        }\n       </style>\n       <md-card class=\"rd-card\">\n          <md-card-header>\n            <md-card-title> \n              <a routerLink=\"/news/{{ card?.$key }}\" routerLinkActive=\"active\" class=\"rd-title\">{{ card?.title }}</a>\n            </md-card-title>\n            <div class=\"rd-right\">\n                <md-icon *ngIf=\"isAuth\" (click)=\"editNews()\" class=\"rd-margin\">edit</md-icon>\n                <md-icon *ngIf=\"isAuth\" (click)=\"deleteNews()\">delete</md-icon>\n            </div>\n          </md-card-header>\n          <md-card-content>\n            <div [innerHTML]=\"sanitizedHtmlContent\"></div>\n          </md-card-content>\n          <md-card-actions>\n            <button md-button (click)=\"addLike()\"><md-icon class=\"rd-icon\">thumb_up</md-icon><span> {{ card?.like }} </span></button>\n          </md-card-actions>\n        </md-card>  \n    "
+            template: " \n       <style>\n        .rd-card {\n          margin: 20px;\n        }\n        .rd-right {\n          margin-left:auto; \n          margin-right:0;\n          cursor: pointer;\n        }\n        .rd-title {\n            font-size: 20px;\n            text-decoration: none;\n            font-color: blue;\n        }\n        .rd-margin {\n            margin-right: 5px;\n        }\n        .rd-content {\n            color: #636262;\n        }\n        a {\n          text-decoration: none;\n          color: #6565e2;\n        }\n        a:link{\n           color: #6565e2;\n        }\n        a:hover{\n           color: #6565e2;\n        }\n        a:active{\n           color: #6565e2;\n        }\n       </style>\n       <md-card class=\"rd-card\">\n          <md-card-header>\n            <md-card-title> \n              <a routerLink=\"/news/{{ card?.$key }}\" routerLinkActive=\"active\" class=\"rd-title\">\n                  <i class=\"fa fa-slack\" aria-hidden=\"true\"></i>\n                  {{ card?.title }}\n              </a>\n            </md-card-title>\n            <div class=\"rd-right\">\n                <md-icon *ngIf=\"isAuth\" (click)=\"editNews()\" class=\"rd-margin\">edit</md-icon>\n                <md-icon *ngIf=\"isAuth\" (click)=\"deleteNews()\">delete</md-icon>\n            </div>\n          </md-card-header>\n          <md-card-content>\n            <div [innerHTML]=\"sanitizedHtmlContent\" class=\"rd-content\"></div>\n          </md-card-content>\n          <md-card-actions>\n            <button md-button (click)=\"addLike()\"><md-icon class=\"rd-icon\">thumb_up</md-icon><span> {{ card?.like }} </span></button>\n          </md-card-actions>\n        </md-card>  \n    "
         }), 
-        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3_angularfire2__["d" /* AngularFire */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_3_angularfire2__["d" /* AngularFire */]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */]) === 'function' && _c) || Object, (typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__["c" /* DomSanitizer */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__["c" /* DomSanitizer */]) === 'function' && _d) || Object])
+        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3_angularfire2__["d" /* AngularFire */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_3_angularfire2__["d" /* AngularFire */]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */]) === 'function' && _b) || Object, (typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */]) === 'function' && _c) || Object, (typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__["c" /* DomSanitizer */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__["c" /* DomSanitizer */]) === 'function' && _d) || Object, (typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__["d" /* Title */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__["d" /* Title */]) === 'function' && _e) || Object])
     ], CardComponent);
     return CardComponent;
-    var _a, _b, _c, _d;
+    var _a, _b, _c, _d, _e;
 }());
 //# sourceMappingURL=/Users/dowonyun/opensource/ysyun/trend-mini-blog/src/card.component.js.map
 
@@ -230,7 +232,8 @@ var CardComponent = (function () {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_angularfire2__ = __webpack_require__(123);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2__ = __webpack_require__(123);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return NewsComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -243,9 +246,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
 var NewsComponent = (function () {
-    function NewsComponent(af) {
+    function NewsComponent(af, title) {
         this.af = af;
+        this.title = title;
     }
     NewsComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -253,6 +258,7 @@ var NewsComponent = (function () {
             .list('/news')
             .subscribe(function (news) {
             _this.cards = news; //_.sortBy(news, o => o.create);
+            _this.title.setTitle('To be a Reactive Developer');
         });
     };
     NewsComponent = __decorate([
@@ -260,10 +266,10 @@ var NewsComponent = (function () {
             selector: 'news',
             template: "\n        <card [card]=\"card\" *ngFor=\"let card of cards\"> </card>\n    "
         }), 
-        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_angularfire2__["d" /* AngularFire */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1_angularfire2__["d" /* AngularFire */]) === 'function' && _a) || Object])
+        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2_angularfire2__["d" /* AngularFire */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2_angularfire2__["d" /* AngularFire */]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__["d" /* Title */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__["d" /* Title */]) === 'function' && _b) || Object])
     ], NewsComponent);
     return NewsComponent;
-    var _a;
+    var _a, _b;
 }());
 //# sourceMappingURL=/Users/dowonyun/opensource/ysyun/trend-mini-blog/src/news.component.js.map
 
@@ -347,11 +353,6 @@ var AppRoutingModule = (function () {
     ], AppRoutingModule);
     return AppRoutingModule;
 }());
-/*
-Copyright 2017 Google Inc. All Rights Reserved.
-Use of this source code is governed by an MIT-style license that
-can be found in the LICENSE file at http://angular.io/license
-*/ 
 //# sourceMappingURL=/Users/dowonyun/opensource/ysyun/trend-mini-blog/src/app-route.module.js.map
 
 /***/ }),
@@ -425,9 +426,9 @@ var AppComponent = (function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__(33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(40);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(41);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_http__ = __webpack_require__(237);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_material__ = __webpack_require__(620);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_angularfire2__ = __webpack_require__(123);
